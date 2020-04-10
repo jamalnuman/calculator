@@ -120,6 +120,7 @@ export default {
 .btn {
   background-color: #eee;
   border: 1px solid #333;
+  cursor: pointer
 }
 
 .operator {
