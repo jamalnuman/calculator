@@ -19,14 +19,7 @@
     <div @click="plus()" class="btn operator">+</div>
     <div @click="append('0')" class="zero btn">0</div>
     <div @click="dot()" class="btn">.</div>
-    <div @click="equal()" class="btn operator">=</div>
-    
-
-
-
-
-
-    
+    <div @click="equal()" class="btn operator">=</div>   
   </div>
 </template>
 
@@ -35,7 +28,7 @@ export default {
   data() {
     return {
       previous: null,
-      current: '500', 
+      current: '', 
       operator: null,
       operatorClicked: false
     }
@@ -46,48 +39,56 @@ export default {
     clear() {
       this.current = ''
     },
+
     sign() {
       this.current = this.current.charAt(0) === "-" ? this.current.slice(1) : `-${this.current}`
     },
+
     percent() {
       this.current = `${parseFloat(this.current) / 100}`
     },
+
     append(num) {
       if (this.operatorClicked) {
         this.current = "";
         this.operatorClicked = false;
       }
-      this.current += num
+      if (this.current.length < 15) {
+        this.current += num
+      }
     },
+
     dot(){
       if(this.current.indexOf('.') === -1) {
         this.append(".")
       }
     },
+
     setPrevious() {
       this.previous = this.current
       this.operatorClicked = true
     },
+
     divide() {
       this.operator = (a, b) => a / b
       this.setPrevious()
-    }, 
+    },
+
     times() {
       this.operator = (a, b) => a * b
       this.setPrevious()
-
     },
+
     minus() {
       this.operator = (a, b) => a - b
       this.setPrevious()
-
     },
+
     plus() {
       this.operator = (a, b) => a + b
-      
       this.setPrevious()
-
     },
+
     equal() {
       this.current = `${this.operator(parseFloat(this.previous), parseFloat(this.current))}`;
       this.previous = null
@@ -109,8 +110,7 @@ export default {
 }
 
 .display {
-  grid-column: 1 / 5; /*takes up the entire first row*/
-  
+  grid-column: 1 / 5; /*takes up the entire first row*/  
 }
 
 .zero {
